@@ -24,6 +24,6 @@
 	"detain/licenses-licensing": "*"
     },
     "autoload": {
-        "psr-4": {"Detain\\MyAdminVpsLicenses\": "src/"}
+        "psr-4": {"Detain\\MyAdminVpsLicenses\\": "src/"}
     }
 }
