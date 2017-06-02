@@ -1,6 +1,6 @@
 <?php
 
-namespace Detain\MyAdminVpsLicenses;
+namespace Detain\MyAdminLicenses;
 
 use Symfony\Component\EventDispatcher\GenericEvent;
 
