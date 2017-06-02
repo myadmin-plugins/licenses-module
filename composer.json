@@ -1,7 +1,7 @@
 {
-    "name": "detain/myadmin-licenses-vps-addon",
+    "name": "detain/myadmin-licenses-module",
     "type": "myadmin-plugin",
-    "description": "Licenses Addon for VPS Module in MyAdmin",
+    "description": "Licenses Module for MyAdmin",
     "keywords": ["licenses","administration","license"],
     "license": "LGPL-2.1",
     "authors": [
@@ -20,10 +20,9 @@
         "php": ">=5.0.0",
         "ext-soap": "*",
 	"symfony/event-dispatcher": "*",
-	"detain/myadmin-plugin-installer": "dev-master",
-	"detain/licenses-licensing": "*"
+	"detain/myadmin-plugin-installer": "dev-master"
     },
     "autoload": {
-        "psr-4": {"Detain\\MyAdminVpsLicenses\\": "src/"}
+        "psr-4": {"Detain\\MyAdminLicenses\\": "src/"}
     }
 }
