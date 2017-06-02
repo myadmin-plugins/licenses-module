@@ -15,7 +15,7 @@ return [
 	'version' => '1.0.0',
 	'type' => 'addon',
 	'hooks' => [
-		'vps.load_addons' => ['Detain\MyAdminVpsLicenses', 'Load'],
+		'vps.load_addons' => ['Detain\MyAdminVpsLicenses\Plugin', 'Load'],
 		/* 'function.requirements' => ['Detain\MyAdminVpsLicenses\Plugin', 'Requirements'],
 		'licenses.settings' => ['Detain\MyAdminVpsLicenses\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminVpsLicenses\Plugin', 'Activate'],
