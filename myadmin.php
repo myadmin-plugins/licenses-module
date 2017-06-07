@@ -16,8 +16,8 @@ return [
 	'type' => 'module',
 	'hooks' => [
 		'licenses.load_processing' => ['Detain\MyAdminLicenses\Plugin', 'Load'],
-		/* 'function.requirements' => ['Detain\MyAdminLicenses\Plugin', 'Requirements'],
 		'licenses.settings' => ['Detain\MyAdminLicenses\Plugin', 'Settings'],
+		/* 'function.requirements' => ['Detain\MyAdminLicenses\Plugin', 'Requirements'],
 		'licenses.activate' => ['Detain\MyAdminLicenses\Plugin', 'Activate'],
 		'licenses.change_ip' => ['Detain\MyAdminLicenses\Plugin', 'ChangeIp'],
 		'ui.menu' => ['Detain\MyAdminLicenses\Plugin', 'Menu'] */
