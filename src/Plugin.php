@@ -50,4 +50,9 @@ class Plugin {
 	
 	}
 
+	public static function Settings(GenericEvent $event) {
+		// will be executed when the licenses.settings event is dispatched
+		$settings = $event->getSubject();
+		$settings->add_dropdown_setting('licenses', 'General', 'outofstock_licenses', 'Out Of Stock Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES'), array('0', '1'), array('No', 'Yes', ));
+	}
 }
