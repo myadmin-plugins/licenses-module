@@ -23,6 +23,6 @@
 	"detain/myadmin-plugin-installer": "dev-master"
     },
     "autoload": {
-        "psr-4": {"Detain\\MyAdminLicenses\\\": "src/"}
+        "psr-4": {"Detain\\MyAdminLicenses\\": "src/"}
     }
 }
