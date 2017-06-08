@@ -5,7 +5,7 @@
  - add way to call/hook into install/uninstall
 */
 return [
-	'name' => 'MyAdmin Licensing Module',
+	'name' => 'Licensing Module',
 	'description' => 'Allows selling of Licenses.',
 	'help' => '',
 	'module' => 'licenses',
