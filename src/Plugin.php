@@ -6,7 +6,21 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
+	public static $name = 'Licensing Module';
+	public static $description = 'Allows selling of Licenses.';
+	public static $help = '';
+	public static $module = 'licenses';
+	public static $type = 'module';
+
+
 	public function __construct() {
+	}
+
+	public static function Hooks() {
+		return [
+			'licenses.load_processing' => ['Detain\MyAdminLicenses\Plugin', 'Load'],
+			'licenses.settings' => ['Detain\MyAdminLicenses\Plugin', 'Settings'],
+		];
 	}
 
 	public static function Load(GenericEvent $event) {
