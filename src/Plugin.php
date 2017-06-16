@@ -18,8 +18,8 @@ class Plugin {
 
 	public static function Hooks() {
 		return [
-			'licenses.load_processing' => ['Detain\MyAdminLicenses\Plugin', 'Load'],
-			'licenses.settings' => ['Detain\MyAdminLicenses\Plugin', 'Settings'],
+			'licenses.load_processing' => [__CLASS__, 'Load'],
+			'licenses.settings' => [__CLASS__, 'Settings'],
 		];
 	}
 
