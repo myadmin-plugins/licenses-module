@@ -27,8 +27,8 @@ class Plugin {
 		$service = $event->getSubject();
 		$service->set_module('licenses')
 			->set_enable(function() {
-				myadmin_log($module, 'info', "PPP - {$service_name} - {$service_types[$db->Record[$settings['PREFIX'] . '_type']]['services_category']}", __LINE__, __FILE__);
-				myadmin_log($module, 'info', str_replace("\n", '', var_export($service_types[$db->Record[$settings['PREFIX'] . '_type']], true)), __LINE__, __FILE__);
+				myadmin_log($module, 'info', "PPP - {$service_name} - {$serviceTypes[$db->Record[$settings['PREFIX'] . '_type']]['services_category']}", __LINE__, __FILE__);
+				myadmin_log($module, 'info', str_replace("\n", '', var_export($serviceTypes[$db->Record[$settings['PREFIX'] . '_type']], true)), __LINE__, __FILE__);
 				activate_license($db->Record[$settings['PREFIX'] . '_id']);
 				$db2->query("update {$settings['TABLE']} set {$settings['PREFIX']}_status='active' where {$settings['PREFIX']}_id='{$db->Record[$settings['PREFIX'] . '_id']}'", __LINE__, __FILE__);
 				$GLOBALS['tf']->history->add($module, 'change_status', 'active', $db->Record[$settings['PREFIX'].'_id'], $db->Record[$settings['PREFIX'] . '_custid']);
@@ -44,14 +44,14 @@ class Plugin {
 				$headers .= 'From: ' . TITLE . ' <' . EMAIL_FROM . '>' . EMAIL_NEWLINE;
 				admin_mail($subject, $email, $headers, false, 'admin_email_license_created.tpl');
 			})->set_reactivate(function() {
-				myadmin_log($module, 'info', "PPP - {$service_name} - {$service_types[$db->Record[$settings['PREFIX'] . '_type']]['services_category']}", __LINE__, __FILE__);
-				myadmin_log($module, 'info', str_replace("\n", '', var_export($service_types[$db->Record[$settings['PREFIX'] . '_type']], true)), __LINE__, __FILE__);
+				myadmin_log($module, 'info', "PPP - {$service_name} - {$serviceTypes[$db->Record[$settings['PREFIX'] . '_type']]['services_category']}", __LINE__, __FILE__);
+				myadmin_log($module, 'info', str_replace("\n", '', var_export($serviceTypes[$db->Record[$settings['PREFIX'] . '_type']], true)), __LINE__, __FILE__);
 				activate_license($db->Record[$settings['PREFIX'] . '_id']);
 				$db2->query("update {$settings['TABLE']} set {$settings['PREFIX']}_status='active' where {$settings['PREFIX']}_id='{$db->Record[$settings['PREFIX'] . '_id']}'", __LINE__, __FILE__);
 				$GLOBALS['tf']->history->add($module, 'change_status', 'active', $db->Record[$settings['PREFIX'] . '_id'], $db->Record[$settings['PREFIX'] . '_custid']);
 				$smarty = new TFSmarty;
 				$smarty->assign('license_ip', $db->Record[$settings['PREFIX'] . '_ip']);
-				$smarty->assign('license_name', (isset($service_name) ? $service_name : $service_types[$db->Record[$settings['PREFIX'] . '_type']]['services_name']));
+				$smarty->assign('license_name', (isset($service_name) ? $service_name : $serviceTypes[$db->Record[$settings['PREFIX'] . '_type']]['services_name']));
 				$email = $smarty->fetch('email/admin_email_license_reactivated.tpl');
 				$subject = $db->Record[$settings['TITLE_FIELD']].' '.$service_name.' '.$settings['TBLNAME'].' Re-Activated';
 				$headers = '';
