@@ -16,7 +16,7 @@ class Plugin {
 	public function __construct() {
 	}
 
-	public static function Hooks() {
+	public static function getHooks() {
 		return [
 			'licenses.load_processing' => [__CLASS__, 'Load'],
 			'licenses.settings' => [__CLASS__, 'Settings'],
