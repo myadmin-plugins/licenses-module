@@ -27,7 +27,7 @@ class Plugin {
 		$service = $event->getSubject();
 		$service->set_module('licenses')
 			->set_enable(function($service) {
-				$module = $service->get_module();
+				$module = $service->getModule();
 				$serviceTypes = run_event('get_service_types', false, $module);
 				$serviceInfo = $service->getServiceInfo();
 				$settings = get_module_settings($module);
@@ -46,7 +46,7 @@ class Plugin {
 				$headers .= 'From: ' . TITLE . ' <' . EMAIL_FROM . '>' . EMAIL_NEWLINE;
 				admin_mail($subject, $email, $headers, false, 'admin_email_license_created.tpl');
 			})->set_reactivate(function($service) {
-				$module = $service->get_module();
+				$module = $service->getModule();
 				$serviceTypes = run_event('get_service_types', false, $module);
 				$serviceInfo = $service->getServiceInfo();
 				$settings = get_module_settings($module);
