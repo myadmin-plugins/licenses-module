@@ -25,7 +25,7 @@ class Plugin {
 
 	public static function loadProcessing(GenericEvent $event) {
 		$service = $event->getSubject();
-		$service->set_module('licenses')
+		$service->setModule('licenses')
 			->set_enable(function($service) {
 				$module = $service->getModule();
 				$serviceTypes = run_event('get_service_types', false, $module);
