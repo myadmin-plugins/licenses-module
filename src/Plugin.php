@@ -18,12 +18,12 @@ class Plugin {
 
 	public static function getHooks() {
 		return [
-			'licenses.load_processing' => [__CLASS__, 'Load'],
+			'licenses.load_processing' => [__CLASS__, 'loadProcessing'],
 			'licenses.settings' => [__CLASS__, 'getSettings'],
 		];
 	}
 
-	public static function Load(GenericEvent $event) {
+	public static function loadProcessing(GenericEvent $event) {
 		$service = $event->getSubject();
 		$service->set_module('licenses')
 			->set_enable(function($service) {
