@@ -31,7 +31,7 @@ class Plugin {
 				$GLOBALS['tf']->history->add($module, 'change_status', 'active', $db->Record[$settings['PREFIX'].'_id'], $db->Record[$settings['PREFIX'] . '_custid']);
 				$smarty = new TFSmarty;
 				$smarty->assign('license_ip', $db->Record[$settings['PREFIX'] . '_ip']);
-				$smarty->assign('license_name', $service_name);
+				$smarty->assign('service_name', $service_name);
 				$email = $smarty->fetch('email/admin_email_license_created.tpl');
 				//$subject = $smarty->get_template_vars('subject');
 				$subject = 'New ' . $service_name . ' License Created ' . $db->Record[$settings['PREFIX'].'_ip'];
@@ -48,7 +48,7 @@ class Plugin {
 				$GLOBALS['tf']->history->add($module, 'change_status', 'active', $db->Record[$settings['PREFIX'] . '_id'], $db->Record[$settings['PREFIX'] . '_custid']);
 				$smarty = new TFSmarty;
 				$smarty->assign('license_ip', $db->Record[$settings['PREFIX'] . '_ip']);
-				$smarty->assign('license_name', (isset($service_name) ? $service_name : $serviceTypes[$db->Record[$settings['PREFIX'] . '_type']]['services_name']));
+				$smarty->assign('service_name', (isset($service_name) ? $service_name : $serviceTypes[$db->Record[$settings['PREFIX'] . '_type']]['services_name']));
 				$email = $smarty->fetch('email/admin_email_license_reactivated.tpl');
 				$subject = $db->Record[$settings['TITLE_FIELD']].' '.$service_name.' '.$settings['TBLNAME'].' Re-Activated';
 				$headers = '';
