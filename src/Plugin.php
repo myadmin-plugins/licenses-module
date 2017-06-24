@@ -13,8 +13,8 @@ class Plugin {
 	public static $type = 'module';
 	public static $settings = [
 		'SERVICE_ID_OFFSET' => 5000,
-		'USE_REPEAT_INVOICE' => true,
-		'USE_PACKAGES' => true,
+		'USE_REPEAT_INVOICE' => TRUE,
+		'USE_PACKAGES' => TRUE,
 		'BILLING_DAYS_OFFSET' => 0,
 		'IMGNAME' => 'paper_content_chart_48.png',
 		'REPEAT_BILLING_METHOD' => NORMAL_BILLING,
@@ -45,7 +45,7 @@ class Plugin {
 		$service = $event->getSubject();
 		$service->setModule(self::$module)
 			->set_enable(function($service) {
-				$serviceTypes = run_event('get_service_types', false, self::$module);
+				$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 				$serviceInfo = $service->getServiceInfo();
 				$settings = get_module_settings(self::$module);
 				$db = get_module_db(self::$module);
@@ -61,9 +61,9 @@ class Plugin {
 				$headers .= 'MIME-Version: 1.0' . EMAIL_NEWLINE;
 				$headers .= 'Content-type: text/html; charset=UTF-8' . EMAIL_NEWLINE;
 				$headers .= 'From: ' . TITLE . ' <' . EMAIL_FROM . '>' . EMAIL_NEWLINE;
-				admin_mail($subject, $email, $headers, false, 'admin_email_license_created.tpl');
+				admin_mail($subject, $email, $headers, FALSE, 'admin_email_license_created.tpl');
 			})->set_reactivate(function($service) {
-				$serviceTypes = run_event('get_service_types', false, self::$module);
+				$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 				$serviceInfo = $service->getServiceInfo();
 				$settings = get_module_settings(self::$module);
 				$db = get_module_db(self::$module);
@@ -78,7 +78,7 @@ class Plugin {
 				$headers .= 'MIME-Version: 1.0' . EMAIL_NEWLINE;
 				$headers .= 'Content-type: text/html; charset=UTF-8' . EMAIL_NEWLINE;
 				$headers .= 'From: ' . TITLE . ' <' . EMAIL_FROM . '>' . EMAIL_NEWLINE;
-				admin_mail($subject, $email, $headers, false, 'admin_email_license_reactivated.tpl');
+				admin_mail($subject, $email, $headers, FALSE, 'admin_email_license_reactivated.tpl');
 			})->set_disable(function() {
 			})->register();
 
