@@ -11,6 +11,24 @@ class Plugin {
 	public static $help = '';
 	public static $module = 'licenses';
 	public static $type = 'module';
+	public static $settings = [
+		'SERVICE_ID_OFFSET' => 5000,
+		'USE_REPEAT_INVOICE' => true,
+		'USE_PACKAGES' => true,
+		'BILLING_DAYS_OFFSET' => 0,
+		'IMGNAME' => 'paper_content_chart_48.png',
+		'REPEAT_BILLING_METHOD' => NORMAL_BILLING,
+		'DELETE_PENDING_DAYS' => 45,
+		'SUSPEND_DAYS' => 9,
+		'SUSPEND_WARNING_DAYS' => 7,
+		'TITLE' => 'Licensing',
+		'EMAIL_FROM' => 'invoice@cpaneldirect.net',
+		'TBLNAME' => 'Licenses',
+		'TABLE' => 'licenses',
+		'PREFIX' => 'license',
+		'TITLE_FIELD' => 'license_ip',
+		'TITLE_FIELD2' => 'license_hostname',
+		'MENUNAME' => 'Licensing'];
 
 
 	public function __construct() {
