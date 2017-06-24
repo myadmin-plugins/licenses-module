@@ -27,9 +27,6 @@ class Plugin {
 		$service = $event->getSubject();
 		$service->set_module('licenses')
 			->set_enable(function() {
-				myadmin_log($module, 'info', "PPP - {$service_name} - {$serviceTypes[$db->Record[$settings['PREFIX'] . '_type']]['services_category']}", __LINE__, __FILE__);
-				myadmin_log($module, 'info', str_replace("\n", '', var_export($serviceTypes[$db->Record[$settings['PREFIX'] . '_type']], true)), __LINE__, __FILE__);
-				activate_license($db->Record[$settings['PREFIX'] . '_id']);
 				$db2->query("update {$settings['TABLE']} set {$settings['PREFIX']}_status='active' where {$settings['PREFIX']}_id='{$db->Record[$settings['PREFIX'] . '_id']}'", __LINE__, __FILE__);
 				$GLOBALS['tf']->history->add($module, 'change_status', 'active', $db->Record[$settings['PREFIX'].'_id'], $db->Record[$settings['PREFIX'] . '_custid']);
 				$smarty = new TFSmarty;
@@ -61,7 +58,7 @@ class Plugin {
 				admin_mail($subject, $email, $headers, false, 'admin_email_license_reactivated.tpl');
 			})->set_disable(function() {
 			})->register();
-	
+
 	}
 
 	public static function getSettings(GenericEvent $event) {
