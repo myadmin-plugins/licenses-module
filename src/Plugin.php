@@ -18,22 +18,21 @@ class Plugin {
 
 	public static function getHooks() {
 		return [
-			'licenses.load_processing' => [__CLASS__, 'loadProcessing'],
-			'licenses.settings' => [__CLASS__, 'getSettings'],
+			self::$module.'.load_processing' => [__CLASS__, 'loadProcessing'],
+			self::$module.'.settings' => [__CLASS__, 'getSettings'],
 		];
 	}
 
 	public static function loadProcessing(GenericEvent $event) {
 		$service = $event->getSubject();
-		$service->setModule('licenses')
+		$service->setModule(self::$module)
 			->set_enable(function($service) {
-				$module = $service->getModule();
-				$serviceTypes = run_event('get_service_types', false, $module);
+				$serviceTypes = run_event('get_service_types', false, self::$module);
 				$serviceInfo = $service->getServiceInfo();
-				$settings = get_module_settings($module);
-				$db = get_module_db($module);
+				$settings = get_module_settings(self::$module);
+				$db = get_module_db(self::$module);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_status='active' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'] . '_id']}'", __LINE__, __FILE__);
-				$GLOBALS['tf']->history->add($module, 'change_status', 'active', $serviceInfo[$settings['PREFIX'].'_id'], $serviceInfo[$settings['PREFIX'] . '_custid']);
+				$GLOBALS['tf']->history->add(self::$module, 'change_status', 'active', $serviceInfo[$settings['PREFIX'].'_id'], $serviceInfo[$settings['PREFIX'] . '_custid']);
 				$smarty = new \TFSmarty;
 				$smarty->assign('license_ip', $serviceInfo[$settings['PREFIX'] . '_ip']);
 				$smarty->assign('service_name', $serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name']);
@@ -46,13 +45,12 @@ class Plugin {
 				$headers .= 'From: ' . TITLE . ' <' . EMAIL_FROM . '>' . EMAIL_NEWLINE;
 				admin_mail($subject, $email, $headers, false, 'admin_email_license_created.tpl');
 			})->set_reactivate(function($service) {
-				$module = $service->getModule();
-				$serviceTypes = run_event('get_service_types', false, $module);
+				$serviceTypes = run_event('get_service_types', false, self::$module);
 				$serviceInfo = $service->getServiceInfo();
-				$settings = get_module_settings($module);
-				$db = get_module_db($module);
+				$settings = get_module_settings(self::$module);
+				$db = get_module_db(self::$module);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_status='active' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'] . '_id']}'", __LINE__, __FILE__);
-				$GLOBALS['tf']->history->add($module, 'change_status', 'active', $serviceInfo[$settings['PREFIX'] . '_id'], $serviceInfo[$settings['PREFIX'] . '_custid']);
+				$GLOBALS['tf']->history->add(self::$module, 'change_status', 'active', $serviceInfo[$settings['PREFIX'] . '_id'], $serviceInfo[$settings['PREFIX'] . '_custid']);
 				$smarty = new \TFSmarty;
 				$smarty->assign('license_ip', $serviceInfo[$settings['PREFIX'] . '_ip']);
 				$smarty->assign('service_name', $serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name']);
