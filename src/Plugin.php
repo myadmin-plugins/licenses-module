@@ -56,11 +56,11 @@ class Plugin {
 				$smarty->assign('service_name', $serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name']);
 				$email = $smarty->fetch('email/admin_email_license_created.tpl');
 				//$subject = $smarty->get_template_vars('subject');
-				$subject = 'New '.$serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name'] . ' License Created '.$serviceInfo[$settings['PREFIX'].'_ip'];
+				$subject = 'New '.$serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name'].' License Created '.$serviceInfo[$settings['PREFIX'].'_ip'];
 				$headers = '';
 				$headers .= 'MIME-Version: 1.0'.EMAIL_NEWLINE;
 				$headers .= 'Content-type: text/html; charset=UTF-8'.EMAIL_NEWLINE;
-				$headers .= 'From: '.TITLE . ' <'.EMAIL_FROM . '>'.EMAIL_NEWLINE;
+				$headers .= 'From: '.TITLE.' <'.EMAIL_FROM.'>'.EMAIL_NEWLINE;
 				admin_mail($subject, $email, $headers, FALSE, 'admin_email_license_created.tpl');
 			})->set_reactivate(function($service) {
 				$serviceTypes = run_event('get_service_types', FALSE, self::$module);
@@ -77,7 +77,7 @@ class Plugin {
 				$headers = '';
 				$headers .= 'MIME-Version: 1.0'.EMAIL_NEWLINE;
 				$headers .= 'Content-type: text/html; charset=UTF-8'.EMAIL_NEWLINE;
-				$headers .= 'From: '.TITLE . ' <'.EMAIL_FROM . '>'.EMAIL_NEWLINE;
+				$headers .= 'From: '.TITLE.' <'.EMAIL_FROM.'>'.EMAIL_NEWLINE;
 				admin_mail($subject, $email, $headers, FALSE, 'admin_email_license_reactivated.tpl');
 			})->set_disable(function() {
 			})->register();
