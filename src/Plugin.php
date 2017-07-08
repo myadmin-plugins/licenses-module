@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
-	public static $name = 'Licensing Module';
+	public static $name = 'Licensing';
 	public static $description = 'Allows selling of Licenses.';
 	public static $help = '';
 	public static $module = 'licenses';
