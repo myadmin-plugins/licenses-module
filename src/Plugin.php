@@ -4,6 +4,11 @@ namespace Detain\MyAdminLicenses;
 
 use Symfony\Component\EventDispatcher\GenericEvent;
 
+/**
+ * Class Plugin
+ *
+ * @package Detain\MyAdminLicenses
+ */
 class Plugin {
 
 	public static $name = 'Licensing';
@@ -30,10 +35,15 @@ class Plugin {
 		'TITLE_FIELD2' => 'license_hostname',
 		'MENUNAME' => 'Licensing'];
 
-
+	/**
+	 * Plugin constructor.
+	 */
 	public function __construct() {
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getHooks() {
 		return [
 			self::$module.'.load_processing' => [__CLASS__, 'loadProcessing'],
@@ -41,6 +51,9 @@ class Plugin {
 		];
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function loadProcessing(GenericEvent $event) {
 		$service = $event->getSubject();
 		$service->setModule(self::$module)
@@ -84,6 +97,9 @@ class Plugin {
 
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
 		$settings->add_dropdown_setting(self::$module, 'General', 'outofstock_licenses', 'Out Of Stock Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES'), ['0', '1'], ['No', 'Yes']);
