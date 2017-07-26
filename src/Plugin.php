@@ -94,7 +94,6 @@ class Plugin {
 				admin_mail($subject, $email, $headers, FALSE, 'admin_email_license_reactivated.tpl');
 			})->set_disable(function() {
 			})->register();
-
 	}
 
 	/**
