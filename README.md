@@ -24,5 +24,5 @@ composer require detain/myadmin-licenses-module
 
 ## License
 
-The Licenses Module for MyAdmin class is licensed under the LGPL-v2 license.
+The Licenses Module for MyAdmin class is licensed under the LGPL-v2.1 license.
 
