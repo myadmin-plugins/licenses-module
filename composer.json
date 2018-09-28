@@ -1,5 +1,5 @@
 {
-	"name": "detain/licenses-module",
+	"name": "detain/myadmin-licenses-module",
 	"type": "myadmin-plugin",
 	"description": "Licenses Module for MyAdmin",
 	"keywords": [
