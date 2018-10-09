@@ -69,7 +69,7 @@ class Plugin
 				$settings = get_module_settings(self::$module);
 				$db = get_module_db(self::$module);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_status='active' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
-				$GLOBALS['tf']->history->add(self::$module, 'change_status', 'active', $serviceInfo[$settings['PREFIX'].'_id'], $serviceInfo[$settings['PREFIX'].'_custid']);
+				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_status', 'active', $serviceInfo[$settings['PREFIX'].'_id'], $serviceInfo[$settings['PREFIX'].'_custid']);
 				$smarty = new \TFSmarty;
 				$smarty->assign('license_ip', $serviceInfo[$settings['PREFIX'].'_ip']);
 				$smarty->assign('service_name', $serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name']);
@@ -87,7 +87,7 @@ class Plugin
 				$settings = get_module_settings(self::$module);
 				$db = get_module_db(self::$module);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_status='active' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
-				$GLOBALS['tf']->history->add(self::$module, 'change_status', 'active', $serviceInfo[$settings['PREFIX'].'_id'], $serviceInfo[$settings['PREFIX'].'_custid']);
+				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_status', 'active', $serviceInfo[$settings['PREFIX'].'_id'], $serviceInfo[$settings['PREFIX'].'_custid']);
 				$smarty = new \TFSmarty;
 				$smarty->assign('license_ip', $serviceInfo[$settings['PREFIX'].'_ip']);
 				$smarty->assign('service_name', $serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name']);
