@@ -61,13 +61,13 @@ class Plugin
     public static function getRequirements(GenericEvent $event)
     {
         $loader = $event->getSubject();
-        $loader->add_requirement('api_get_license_types', __DIR__.'/api.php');
-        $loader->add_requirement('api_cancel_license_ip', __DIR__.'/api.php');
-        $loader->add_requirement('api_cancel_license', __DIR__.'/api.php');
-        $loader->add_requirement('api_buy_license_prepay', __DIR__.'/api.php');
-        $loader->add_requirement('api_buy_license', __DIR__.'/api.php');
-        $loader->add_requirement('api_change_license_ip', __DIR__.'/api.php');
-        $loader->add_requirement('api_change_license_ip_by_id', __DIR__.'/api.php');
+        $loader->add_requirement('api_get_license_types', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+        $loader->add_requirement('api_cancel_license_ip', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+        $loader->add_requirement('api_cancel_license', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+        $loader->add_requirement('api_buy_license_prepay', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+        $loader->add_requirement('api_buy_license', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+        $loader->add_requirement('api_change_license_ip', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+        $loader->add_requirement('api_change_license_ip_by_id', '/../vendor/detain/myadmin-licenses-module/src/api.php');
     }
     
     /**
@@ -78,7 +78,7 @@ class Plugin
         /**
          * @var \ServiceHandler $subject
          */
-        $subject = $event->getSubject();
+        //$subject = $event->getSubject();
         //api_register_array('license_types', 'complexType', 'array', '', 'SOAP-ENC:Array', [], [['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'license_type[]']], 'license_type');
         api_register_array('license_type', ['services_id' => 'int', 'services_name' => 'string', 'services_cost' => 'float']);
         api_register_array('buy_license_return', ['status' => 'string', 'status_text' => 'string', 'invoice' => 'int', 'cost' => 'float']);
