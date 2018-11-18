@@ -153,6 +153,6 @@ class Plugin
          * @var \MyAdmin\Settings $settings
          **/
         $settings = $event->getSubject();
-		$settings->add_dropdown_setting(self::$module, __('General'), 'outofstock_licenses', __('Out Of Stock Licenses'), __('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES'), ['0', '1'], ['No', 'Yes']);
+		$settings->add_dropdown_setting(self::$module, _('General'), 'outofstock_licenses', _('Out Of Stock Licenses'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES'), ['0', '1'], ['No', 'Yes']);
 	}
 }
