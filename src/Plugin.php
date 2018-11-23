@@ -134,7 +134,7 @@ class Plugin
 				$smarty->assign('license_ip', $serviceInfo[$settings['PREFIX'].'_ip']);
 				$smarty->assign('service_name', $serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name']);
 				$email = $smarty->fetch('email/admin/license_reactivated.tpl');
-				$subject = $serviceInfo[$settings['TITLE_FIELD']].' '.$serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name'].' '.$settings['TBLNAME'].' Re-Activated';
+				$subject = $serviceInfo[$settings['TITLE_FIELD']].' '.$serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name'].' '.$settings['TBLNAME'].' Reactivated';
 				$headers = '';
 				$headers .= 'MIME-Version: 1.0'.PHP_EOL;
 				$headers .= 'Content-type: text/html; charset=UTF-8'.PHP_EOL;
