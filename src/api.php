@@ -26,18 +26,18 @@ function api_get_license_types()
 }
 
 /**
- * Cancels one of your Software Licenses of type $type on the given IP $ip
+ * Cancels one of your Software Licenses of type $service_type on the given IP $ip
  *
  * @param string $sid  Session ID
  * @param string $ip   IP Address to cancel
- * @param int    $type Package ID. use [get_license_types](#get-license-types) to get a list of possible types.
+ * @param int    $service_type Package ID. use [get_license_types](#get-license-types) to get a list of possible types.
  * @return array
  * @throws \Exception
  */
-function api_cancel_license_ip($sid, $ip, $type)
+function api_cancel_license_ip($sid, $ip, $service_type)
 {
-	$type = (int)$type;
-	myadmin_log('api', 'info', "api_cancel_license_ip('{$sid}', '{$ip}', {$type}) called", __LINE__, __FILE__);
+	$service_type = (int)$service_type;
+	myadmin_log('api', 'info', "api_cancel_license_ip('{$sid}', '{$ip}', {$service_type}) called", __LINE__, __FILE__);
 	$module = 'licenses';
 	$GLOBALS['tf']->accounts->set_db_module($module);
 	$GLOBALS['tf']->history->set_db_module($module);
@@ -76,7 +76,7 @@ function api_cancel_license_ip($sid, $ip, $type)
 		$return['status_text'] = 'Multiple Matches, Specify Type.  ';
 		while ($db->next_record(MYSQL_ASSOC)) {
 			$return['status_text'] .= "License ID {$db->Record[$settings['PREFIX'] . '_id']} Type {$db->Record[$settings['PREFIX'] . '_type']} ({$service_types[$db->Record[$settings['PREFIX'] . '_type']]['services_name']})  ";
-			if ($type != '' && $type == $db->Record[$settings['PREFIX'] . '_type']) {
+			if ($service_type != '' && $service_type == $db->Record[$settings['PREFIX'] . '_type']) {
 				// reused code block from below start
 				$id = $db->Record[$settings['PREFIX'] . '_id'];
 				function_requirements('cancel_service');
@@ -147,35 +147,35 @@ function api_cancel_license($sid, $id)
 }
 
 /**
- * Places an order in our system for a software license of type $type on the IP $ip
+ * Places an order in our system for a software license of type $service_type on the IP $ip
  *
  * @param string    $sid        the session id
  * @param string    $ip         ip address you wish to license some software on
- * @param int       $type       the package id of the license type you want. use [get_license_types](#get-license-types) to get a list of possible types.
+ * @param int       $service_type       the package id of the license type you want. use [get_license_types](#get-license-types) to get a list of possible types.
  * @param string    $coupon     an optional coupon
  * @param null|bool $use_prepay optional, whether or not to use a prepay, if specified as true will return an error if not enough prepay
  * @return array
  * @throws \Exception
  * @throws \SmartyException
  */
-function api_buy_license_prepay($sid, $ip, $type, $coupon = '', $use_prepay = null)
+function api_buy_license_prepay($sid, $ip, $service_type, $coupon = '', $use_prepay = null)
 {
-	return api_buy_license($sid, $ip, $type, $coupon, $use_prepay);
+	return api_buy_license($sid, $ip, $service_type, $coupon, $use_prepay);
 }
 
 /**
- * Places an order in our system for a software license of type $type on the IP $ip
+ * Places an order in our system for a software license of type $service_type on the IP $ip
  *
  * @param string    $sid        the session id
  * @param string    $ip         ip address you wish to license some software on
- * @param int       $type       the package id of the license type you want. use [get_license_types](#get-license-types) to get a list of possible types.
+ * @param int       $service_type       the package id of the license type you want. use [get_license_types](#get-license-types) to get a list of possible types.
  * @param string    $coupon     an optional coupon
  * @param null|bool $use_prepay optional, whether or not to use a prepay, if specified as true will return an error if not enough prepay
  * @return array
  * @throws \Exception
  * @throws \SmartyException
  */
-function api_buy_license($sid, $ip, $type, $coupon = '', $use_prepay = null)
+function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = null)
 {
 	if (null === $use_prepay) {
 		$use_prepay = true;
@@ -185,12 +185,12 @@ function api_buy_license($sid, $ip, $type, $coupon = '', $use_prepay = null)
 	}
 	$module = 'licenses';
 	$settings = get_module_settings($module);
-	$type = (int)$type;
+	$service_type = (int)$service_type;
 	$db = get_module_db($module);
 	$ip = $db->real_escape($ip);
 	$coupon = $db->real_escape($coupon);
 	$service_types = run_event('get_service_types', false, $module);
-	$service_cost = $service_types[$type]['services_cost'];
+	$service_cost = $service_types[$service_type]['services_cost'];
 	$service_extra = '';
 	$frequency = 1;
 	$return = [];
@@ -233,28 +233,26 @@ function api_buy_license($sid, $ip, $type, $coupon = '', $use_prepay = null)
 		$return['status_text'] .= "Locked Account.\n";
 		$continue = false;
 	}
-	if (in_array($type, array_keys($int_map)) && in_array($ip_owner, get_internal_ip_owners())) {
+	if (in_array($service_type, array_keys($int_map)) && in_array($ip_owner, get_internal_ip_owners())) {
 		$return['status'] = 'error';
-		$return['status_text'] .= "Your IP appears to be within the {$ip_owner} Network. Because of this your license should be changed to a {$service_types[$int_map[$type]]['services_name']} License.  Please submit the updated order form to place the order.\n";
+		$return['status_text'] .= "Your IP appears to be within the {$ip_owner} Network. Because of this your license should be changed to a {$service_types[$int_map[$service_type]]['services_name']} License.  Please submit the updated order form to place the order.\n";
 		$continue = false;
 	}
-	if ($service_types[$type]['services_field2'] != '') {
-		$valid_blocks = explode(',', $service_types[$type]['services_field2']);
+	if ($service_types[$service_type]['services_field2'] != '') {
+		$valid_blocks = explode(',', $service_types[$service_type]['services_field2']);
 		if (!in_array($ip_owner, $valid_blocks)) {
 			$return['status'] = 'error';
-			$return['status_text'] .= "This IP does not appear to be a {$service_types[$type]['services_field2']} IP\n";
+			$return['status_text'] .= "This IP does not appear to be a {$service_types[$service_type]['services_field2']} IP\n";
 			$continue = false;
 		}
 	}
 	// coupon code
 	if ($coupon != '') {
-		$couponquery = <<<SQL
-select * from coupons where (customer=-1 or customer={$custid}) and (usable != 0) and module='{$module}' and (applies=-1 or applies like '%,{$type},%' or applies='{$type}' or applies like '{$type},%' or applies like '%,{$type}') and (name='{$coupon}')
-SQL;
+		$couponquery = "select * from coupons where (customer=-1 or customer={$custid}) and (usable != 0) and module='{$module}' and (applies=-1 or find_in_set('{$service_type}', applies) != 0) and (name='{$coupon}')";
 		$db->query($couponquery, __LINE__, __FILE__);
 		if ($db->num_rows() == 0) {
 			$return['status'] = 'error';
-			$return['status_text'] .= "Invalid {$module} Coupon '{$coupon}' Specified for type '{$type}'\n";
+			$return['status_text'] .= "Invalid {$module} Coupon '{$coupon}' Specified for type '{$service_type}'\n";
 			$continue = false;
 		} else {
 			$db->next_record(MYSQL_ASSOC);
@@ -286,7 +284,7 @@ SQL;
 	}
 	// previously licensed code
 	if ($continue) {
-		if ($service_types[$type]['services_type'] == get_service_define('CPANEL')) {
+		if ($service_types[$service_type]['services_type'] == get_service_define('CPANEL')) {
 			$db->query("SELECT services_id FROM services LEFT JOIN service_categories ON category_id=services_category WHERE services_module = 'licenses' AND category_module = 'licenses' and category_tag = 'cpanel'");
 			if ($db->num_rows() > 0) {
 				while ($db->next_record(MYSQL_ASSOC)) {
@@ -327,7 +325,7 @@ SQL;
 				}
 			}
 		} else {
-			$db->query("select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_type=$type", __LINE__, __FILE__);
+			$db->query("select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_type=$service_type", __LINE__, __FILE__);
 		}
 		if ($db->num_rows() > 0) {
 			$db->next_record(MYSQL_ASSOC);
@@ -343,7 +341,7 @@ SQL;
 		$now = mysql_now();
 		$repeat_invoice = new \MyAdmin\Orm\Repeat_Invoice($db);
 		$repeat_invoice->setId(null)
-			->setDescription($service_types[$type]['services_name'])
+			->setDescription($service_types[$service_type]['services_name'])
 			->setType(1)
 			->setCost($service_cost)
 			->setCustid($custid)
@@ -360,7 +358,7 @@ SQL;
 		$iid = $invoice->get_id();
 		$db->query(make_insert_query($settings['TABLE'], [
 			$settings['PREFIX'] . '_id' => null,
-			$settings['PREFIX'] . '_type' => $type,
+			$settings['PREFIX'] . '_type' => $service_type,
 			$settings['PREFIX'] . '_cost' => $service_cost,
 			$settings['PREFIX'] . '_frequency' => $frequency,
 			$settings['PREFIX'] . '_order_date' => mysql_now(),
