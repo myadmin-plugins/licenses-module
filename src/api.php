@@ -249,11 +249,7 @@ function api_buy_license($sid, $ip, $type, $coupon = '', $use_prepay = null)
 	// coupon code
 	if ($coupon != '') {
 		$couponquery = <<<SQL
-select * from coupons where
-(customer=-1 or customer={$custid}) and
-(usable != 0) and module='{$module}' and
-(applies=-1 or applies like '%,{$type},%' or applies='{$type}' or applies like '{$type},%' or applies like '%,{$type}') and
-(name='{$coupon}')
+select * from coupons where (customer=-1 or customer={$custid}) and (usable != 0) and module='{$module}' and (applies=-1 or applies like '%,{$type},%' or applies='{$type}' or applies like '{$type},%' or applies like '%,{$type}') and (name='{$coupon}')
 SQL;
 		$db->query($couponquery, __LINE__, __FILE__);
 		if ($db->num_rows() == 0) {
