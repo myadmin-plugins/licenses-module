@@ -39,8 +39,6 @@ function api_cancel_license_ip($sid, $ip, $service_type)
 	$service_type = (int)$service_type;
 	myadmin_log('api', 'info', "api_cancel_license_ip('{$sid}', '{$ip}', {$service_type}) called", __LINE__, __FILE__);
 	$module = 'licenses';
-	$GLOBALS['tf']->accounts->set_db_module($module);
-	$GLOBALS['tf']->history->set_db_module($module);
 	$db = get_module_db($module);
 	$ip = $db->real_escape($ip);
 	$settings = get_module_settings($module);
@@ -111,8 +109,6 @@ function api_cancel_license($sid, $id)
 {
 	$module = 'licenses';
 	$id = (int)$id;
-	$GLOBALS['tf']->accounts->set_db_module($module);
-	$GLOBALS['tf']->history->set_db_module($module);
 	$db = get_module_db($module);
 	$settings = get_module_settings($module);
 	$return = [];
@@ -205,8 +201,6 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
 		5001 => 5014,
 		5002 => 5009
 	];
-	$GLOBALS['tf']->accounts->set_db_module($module);
-	$GLOBALS['tf']->history->set_db_module($module);
 	$GLOBALS['tf']->session->sessionid = $sid;
 	if ($GLOBALS['tf']->session->verify()) {
 		// Read there account data
