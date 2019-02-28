@@ -472,7 +472,7 @@ function api_change_license_ip_by_id($sid, $id, $newip)
 		$GLOBALS['tf']->ima = $GLOBALS['tf']->session->appsession('ima');
 		$GLOBALS['tf']->session->update_dla();
 		if (!check_auth_limits(false)) {
-			myadmin_log('api', 'info', 'This account is currently locked or does not meet the requirements to login.', __LINE__, __FILE__);
+			myadmin_log('api', 'info', 'This account is currently locked or does not meet the requirements to login.', __LINE__, __FILE__, $module);
 			return false;
 		}
 	} else {
