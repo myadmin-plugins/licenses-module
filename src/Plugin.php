@@ -48,52 +48,52 @@ class Plugin
 	public static function getHooks()
 	{
 		return [
-            'api.register' => [__CLASS__, 'apiRegister'],
-            'function.requirements' => [__CLASS__, 'getRequirements'],
+			'api.register' => [__CLASS__, 'apiRegister'],
+			'function.requirements' => [__CLASS__, 'getRequirements'],
 			self::$module.'.load_processing' => [__CLASS__, 'loadProcessing'],
-            self::$module.'.settings' => [__CLASS__, 'getSettings']
+			self::$module.'.settings' => [__CLASS__, 'getSettings']
 		];
 	}
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\GenericEvent $event
-     */
-    public static function getRequirements(GenericEvent $event)
-    {
-        $loader = $event->getSubject();
-        $loader->add_requirement('api_get_license_types', '/../vendor/detain/myadmin-licenses-module/src/api.php');
-        $loader->add_requirement('api_cancel_license_ip', '/../vendor/detain/myadmin-licenses-module/src/api.php');
-        $loader->add_requirement('api_cancel_license', '/../vendor/detain/myadmin-licenses-module/src/api.php');
-        $loader->add_requirement('api_buy_license_prepay', '/../vendor/detain/myadmin-licenses-module/src/api.php');
-        $loader->add_requirement('api_buy_license', '/../vendor/detain/myadmin-licenses-module/src/api.php');
-        $loader->add_requirement('api_change_license_ip', '/../vendor/detain/myadmin-licenses-module/src/api.php');
-        $loader->add_requirement('api_change_license_ip_by_id', '/../vendor/detain/myadmin-licenses-module/src/api.php');
-    }
-    
-    /**
-     * @param \Symfony\Component\EventDispatcher\GenericEvent $event
-     */
-    public static function apiRegister(GenericEvent $event)
-    {
-        /**
-         * @var \ServiceHandler $subject
-         */
-        //$subject = $event->getSubject();
-        //api_register_array('license_types', 'complexType', 'array', '', 'SOAP-ENC:Array', [], [['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'license_type[]']], 'license_type');
-        api_register_array('license_type', ['services_id' => 'int', 'services_name' => 'string', 'services_cost' => 'float']);
-        api_register_array('buy_license_return', ['status' => 'string', 'status_text' => 'string', 'invoice' => 'int', 'cost' => 'float']);
-        api_register_array('change_license_ip_return', ['status' => 'string', 'status_text' => 'string']);
-        api_register_array('change_license_ip_by_id_return', ['status' => 'string', 'status_text' => 'string']);
-        api_register_array('cancel_license_return', ['status' => 'string', 'status_text' => 'string']);
-        api_register_array('cancel_license_ip_return', ['status' => 'string', 'status_text' => 'string']);
-        api_register('api_get_license_types', [], ['return' => 'license_types'], 'Get a license of the various license types.', false, false);
-        api_register('api_cancel_license_ip', ['sid' => 'string', 'ip' => 'string', 'type' => 'int'], ['return' => 'cancel_license_ip_return'], 'Cancel a License by IP and Type.', true, false);
-        api_register('api_cancel_license', ['sid' => 'string', 'id' => 'int'], ['return' => 'cancel_license_return'], 'Cancel a License.', true, false);
-        api_register('api_buy_license', ['sid' => 'string', 'ip' => 'string', 'type' => 'int', 'coupon' => 'string'], ['return' => 'buy_license_return'], 'Purchase a License.  Returns an invoice ID.', true, false);
-        api_register('api_buy_license_prepay', ['sid' => 'string', 'ip' => 'string', 'type' => 'int', 'coupon' => 'string', 'use_prepay' => 'boolean'], ['return' => 'buy_license_return'], 'Purchase a License and optionally uses PrePay.  Will return an error if use_prepay is true not enough PrePay funds are available.', true, false);
-        api_register('api_change_license_ip', ['sid' => 'string', 'oldip' => 'string', 'newip' => 'string'], ['return' => 'change_license_ip_return'], 'Change the IP on an active license.', true, false);
-        api_register('api_change_license_ip_by_id', ['sid' => 'string', 'id' => 'int', 'newip' => 'string'], ['return' => 'change_license_ip_by_id_return'], 'Change the IP on an active license.', true, false);
-    }    
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
+	public static function getRequirements(GenericEvent $event)
+	{
+		$loader = $event->getSubject();
+		$loader->add_requirement('api_get_license_types', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+		$loader->add_requirement('api_cancel_license_ip', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+		$loader->add_requirement('api_cancel_license', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+		$loader->add_requirement('api_buy_license_prepay', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+		$loader->add_requirement('api_buy_license', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+		$loader->add_requirement('api_change_license_ip', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+		$loader->add_requirement('api_change_license_ip_by_id', '/../vendor/detain/myadmin-licenses-module/src/api.php');
+	}
+	
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
+	public static function apiRegister(GenericEvent $event)
+	{
+		/**
+		 * @var \ServiceHandler $subject
+		 */
+		//$subject = $event->getSubject();
+		//api_register_array('license_types', 'complexType', 'array', '', 'SOAP-ENC:Array', [], [['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'license_type[]']], 'license_type');
+		api_register_array('license_type', ['services_id' => 'int', 'services_name' => 'string', 'services_cost' => 'float']);
+		api_register_array('buy_license_return', ['status' => 'string', 'status_text' => 'string', 'invoice' => 'int', 'cost' => 'float']);
+		api_register_array('change_license_ip_return', ['status' => 'string', 'status_text' => 'string']);
+		api_register_array('change_license_ip_by_id_return', ['status' => 'string', 'status_text' => 'string']);
+		api_register_array('cancel_license_return', ['status' => 'string', 'status_text' => 'string']);
+		api_register_array('cancel_license_ip_return', ['status' => 'string', 'status_text' => 'string']);
+		api_register('api_get_license_types', [], ['return' => 'license_types'], 'Get a license of the various license types.', false, false);
+		api_register('api_cancel_license_ip', ['sid' => 'string', 'ip' => 'string', 'type' => 'int'], ['return' => 'cancel_license_ip_return'], 'Cancel a License by IP and Type.', true, false);
+		api_register('api_cancel_license', ['sid' => 'string', 'id' => 'int'], ['return' => 'cancel_license_return'], 'Cancel a License.', true, false);
+		api_register('api_buy_license', ['sid' => 'string', 'ip' => 'string', 'type' => 'int', 'coupon' => 'string'], ['return' => 'buy_license_return'], 'Purchase a License.  Returns an invoice ID.', true, false);
+		api_register('api_buy_license_prepay', ['sid' => 'string', 'ip' => 'string', 'type' => 'int', 'coupon' => 'string', 'use_prepay' => 'boolean'], ['return' => 'buy_license_return'], 'Purchase a License and optionally uses PrePay.  Will return an error if use_prepay is true not enough PrePay funds are available.', true, false);
+		api_register('api_change_license_ip', ['sid' => 'string', 'oldip' => 'string', 'newip' => 'string'], ['return' => 'change_license_ip_return'], 'Change the IP on an active license.', true, false);
+		api_register('api_change_license_ip_by_id', ['sid' => 'string', 'id' => 'int', 'newip' => 'string'], ['return' => 'change_license_ip_by_id_return'], 'Change the IP on an active license.', true, false);
+	}
 
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
@@ -147,12 +147,12 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-    public static function getSettings(GenericEvent $event)
-    {
-        /**
-         * @var \MyAdmin\Settings $settings
-         **/
-        $settings = $event->getSubject();
+	public static function getSettings(GenericEvent $event)
+	{
+		/**
+		 * @var \MyAdmin\Settings $settings
+		 **/
+		$settings = $event->getSubject();
 		$settings->add_dropdown_setting(self::$module, _('General'), 'outofstock_licenses', _('Out Of Stock Licenses'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES'), ['0', '1'], ['No', 'Yes']);
 	}
 }

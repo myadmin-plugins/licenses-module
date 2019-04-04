@@ -350,7 +350,9 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
 		$rid = $repeat_invoice->get_id();
 		$invoice = $repeat_invoice->invoice($now, $service_cost, false);
 		$iid = $invoice->get_id();
-		$db->query(make_insert_query($settings['TABLE'], [
+		$db->query(make_insert_query(
+			$settings['TABLE'],
+			[
 			$settings['PREFIX'] . '_id' => null,
 			$settings['PREFIX'] . '_type' => $service_type,
 			$settings['PREFIX'] . '_cost' => $service_cost,
