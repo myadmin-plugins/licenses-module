@@ -199,7 +199,8 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
 	$int_map = [
 		5000 => 5008,
 		5001 => 5014,
-		5002 => 5009
+		5002 => 5009,
+        10683 => 10682
 	];
 	$GLOBALS['tf']->session->sessionid = $sid;
 	if ($GLOBALS['tf']->session->verify()) {
@@ -286,7 +287,7 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
 				}
 			}
 			$service_id_for_type = implode(',', $temp_service_ids);
-			$db->query("select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_type in ($service_id_for_type)", __LINE__, __FILE__);
+			$db->query("select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_type in ({$service_id_for_type})", __LINE__, __FILE__);
 			if ($db->num_rows() > 0) {
 				while ($db->next_record(MYSQL_ASSOC)) {
 					$license_info = $db->Record;
@@ -319,7 +320,7 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
 				}
 			}
 		} else {
-			$db->query("select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_type=$service_type", __LINE__, __FILE__);
+			$db->query("select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_type={$service_type}", __LINE__, __FILE__);
 		}
 		if ($db->num_rows() > 0) {
 			$db->next_record(MYSQL_ASSOC);
