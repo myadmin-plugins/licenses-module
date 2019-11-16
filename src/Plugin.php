@@ -118,11 +118,7 @@ class Plugin
 				$email = $smarty->fetch('email/admin/license_created.tpl');
 				//$subject = $smarty->get_template_vars('subject');
 				$subject = 'New '.$serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name'].' License Created '.$serviceInfo[$settings['PREFIX'].'_ip'];
-				$headers = '';
-				$headers .= 'MIME-Version: 1.0'.PHP_EOL;
-				$headers .= 'Content-type: text/html; charset=UTF-8'.PHP_EOL;
-				$headers .= 'From: '.TITLE.' <'.EMAIL_FROM.'>'.PHP_EOL;
-				admin_mail($subject, $email, $headers, false, 'admin/license_created.tpl');
+				(new MyAdmin\Mail())->adminMail($subject, $email, false, 'admin/license_created.tpl');
 			})->setReactivate(function ($service) {
 				$serviceTypes = run_event('get_service_types', false, self::$module);
 				$serviceInfo = $service->getServiceInfo();
@@ -135,11 +131,7 @@ class Plugin
 				$smarty->assign('service_name', $serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name']);
 				$email = $smarty->fetch('email/admin/license_reactivated.tpl');
 				$subject = $serviceInfo[$settings['TITLE_FIELD']].' '.$serviceTypes[$serviceInfo[$settings['PREFIX'].'_type']]['services_name'].' '.$settings['TBLNAME'].' Reactivated';
-				$headers = '';
-				$headers .= 'MIME-Version: 1.0'.PHP_EOL;
-				$headers .= 'Content-type: text/html; charset=UTF-8'.PHP_EOL;
-				$headers .= 'From: '.TITLE.' <'.EMAIL_FROM.'>'.PHP_EOL;
-				admin_mail($subject, $email, $headers, false, 'admin/license_reactivated.tpl');
+				(new MyAdmin\Mail())->adminMail($subject, $email, false, 'admin/license_reactivated.tpl');
 			})->setDisable(function () {
 			})->register();
 	}
