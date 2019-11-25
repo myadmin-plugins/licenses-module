@@ -379,7 +379,7 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
 		$smarty->assign('paypal_link', get_paypal_link('SERVICElicenses' . $serviceid, $service_cost, $invoice->get_description()));
 		$msg = $smarty->fetch('email/client/license_paytoactivate.tpl');
 		$subject = 'New Pending License for ' . $ip . ' at cPanelDirect.net';
-		multi_mail($data['account_lid'], $subject, $msg, 'client/license_paytoactivate.tpl');
+		(new \MyAdmin\Mail())->multiMail($subject, $msg, $data['account_lid'], 'client/license_paytoactivate.tpl');
 		$return['status'] = 'ok';
 		$return['status_text'] .= "Order Completed Successfully.\n";
 		$return['invoice'] = $iid;
