@@ -79,7 +79,7 @@ class Plugin
 		 * @var \ServiceHandler $subject
 		 */
 		//$subject = $event->getSubject();
-		//api_register_array('license_types', 'complexType', 'array', '', 'SOAP-ENC:Array', [], [['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'license_type[]']], 'license_type');
+		api_register_array_array('license_types', 'license_type');
 		api_register_array('license_type', ['services_id' => 'int', 'services_name' => 'string', 'services_cost' => 'float']);
 		api_register_array('buy_license_return', ['status' => 'string', 'status_text' => 'string', 'invoice' => 'int', 'cost' => 'float']);
 		api_register_array('change_license_ip_return', ['status' => 'string', 'status_text' => 'string']);
