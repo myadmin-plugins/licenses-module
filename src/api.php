@@ -356,8 +356,6 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
 			[
 			$settings['PREFIX'] . '_id' => null,
 			$settings['PREFIX'] . '_type' => $service_type,
-			$settings['PREFIX'] . '_cost' => $service_cost,
-			$settings['PREFIX'] . '_frequency' => $frequency,
 			$settings['PREFIX'] . '_order_date' => mysql_now(),
 			$settings['PREFIX'] . '_custid' => $custid,
 			$settings['PREFIX'] . '_ip' => $ip,
