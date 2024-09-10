@@ -273,7 +273,7 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
         $prepay = get_prepay_related_amount([], $module);
         if ($prepay <= $service_cost && $prepay_low_funds_triggers_error == true) {
             $return['status'] = 'error';
-            $return['status_text'] .= "You do not have enough Pre-Pay This (Available for a new license: ${$prepay} vs License Cost {$service_cost})\n";
+            $return['status_text'] .= "You do not have enough Pre-Pay This (Available for a new license: \${$prepay} vs License Cost {$service_cost})\n";
             $continue = false;
         }
     }
