@@ -1,28 +1,40 @@
-# Licenses Module for MyAdmin
+# MyAdmin Licenses Module
 
-Licenses Module for MyAdmin
+[![Tests](https://github.com/detain/myadmin-licenses-module/actions/workflows/tests.yml/badge.svg)](https://github.com/detain/myadmin-licenses-module/actions/workflows/tests.yml)
+[![Latest Stable Version](https://poser.pugx.org/detain/myadmin-licenses-module/version)](https://packagist.org/packages/detain/myadmin-licenses-module)
+[![Total Downloads](https://poser.pugx.org/detain/myadmin-licenses-module/downloads)](https://packagist.org/packages/detain/myadmin-licenses-module)
+[![License](https://poser.pugx.org/detain/myadmin-licenses-module/license)](https://packagist.org/packages/detain/myadmin-licenses-module)
 
-## Build Status and Code Analysis
+A plugin module for the MyAdmin administration panel that provides software license management capabilities. It handles the full license lifecycle including purchasing, IP assignment, IP changes, cancellation, and integration with the billing and invoicing system. The module registers as an event-driven plugin through the Symfony EventDispatcher, exposing a SOAP/REST API for programmatic license operations.
 
-Site          | Status
---------------|---------------------------
-![Travis-CI](http://i.is.cc/storage/GYd75qN.png "Travis-CI")     | [![Build Status](https://travis-ci.org/detain/myadmin-licenses-module.svg?branch=master)](https://travis-ci.org/detain/myadmin-licenses-module)
-![CodeClimate](http://i.is.cc/storage/GYlageh.png "CodeClimate")  | [![Code Climate](https://codeclimate.com/github/detain/myadmin-licenses-module/badges/gpa.svg)](https://codeclimate.com/github/detain/myadmin-licenses-module) [![Test Coverage](https://codeclimate.com/github/detain/myadmin-licenses-module/badges/coverage.svg)](https://codeclimate.com/github/detain/myadmin-licenses-module/coverage) [![Issue Count](https://codeclimate.com/github/detain/myadmin-licenses-module/badges/issue_count.svg)](https://codeclimate.com/github/detain/myadmin-licenses-module)
-![Scrutinizer](http://i.is.cc/storage/GYeUnux.png "Scrutinizer")   | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/myadmin-plugins/licenses-module/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/licenses-module/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/myadmin-plugins/licenses-module/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/licenses-module/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/myadmin-plugins/licenses-module/badges/build.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/licenses-module/build-status/master)
-![Codacy](http://i.is.cc/storage/GYi66Cx.png "Codacy")        | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/226251fc068f4fd5b4b4ef9a40011d06)](https://www.codacy.com/app/detain/myadmin-licenses-module) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/25fa74eb74c947bf969602fcfe87e349)](https://www.codacy.com/app/detain/myadmin-licenses-module?utm_source=github.com&utm_medium=referral&utm_content=detain/myadmin-licenses-module&utm_campaign=Badge_Coverage)
-![Coveralls](http://i.is.cc/storage/GYjNSim.png "Coveralls")    | [![Coverage Status](https://coveralls.io/repos/github/detain/db_abstraction/badge.svg?branch=master)](https://coveralls.io/github/detain/myadmin-licenses-module?branch=master)
-![Packagist](http://i.is.cc/storage/GYacBEX.png "Packagist")     | [![Latest Stable Version](https://poser.pugx.org/detain/myadmin-licenses-module/version)](https://packagist.org/packages/detain/myadmin-licenses-module) [![Total Downloads](https://poser.pugx.org/detain/myadmin-licenses-module/downloads)](https://packagist.org/packages/detain/myadmin-licenses-module) [![Latest Unstable Version](https://poser.pugx.org/detain/myadmin-licenses-module/v/unstable)](//packagist.org/packages/detain/myadmin-licenses-module) [![Monthly Downloads](https://poser.pugx.org/detain/myadmin-licenses-module/d/monthly)](https://packagist.org/packages/detain/myadmin-licenses-module) [![Daily Downloads](https://poser.pugx.org/detain/myadmin-licenses-module/d/daily)](https://packagist.org/packages/detain/myadmin-licenses-module) [![License](https://poser.pugx.org/detain/myadmin-licenses-module/license)](https://packagist.org/packages/detain/myadmin-licenses-module)
+## Features
 
+- License purchasing with coupon and prepay support
+- IP-based license assignment and IP change management
+- License cancellation by IP or by license ID
+- Automatic integration with the MyAdmin billing and invoicing system
+- Event-driven architecture using Symfony EventDispatcher
+- Configurable suspend, deletion, and billing parameters
 
 ## Installation
-
-Install with composer like
 
 ```sh
 composer require detain/myadmin-licenses-module
 ```
 
+## Requirements
+
+- PHP >= 5.0
+- ext-soap
+- symfony/event-dispatcher ^5.0
+
+## Testing
+
+```sh
+composer install
+vendor/bin/phpunit
+```
+
 ## License
 
-The Licenses Module for MyAdmin class is licensed under the LGPL-v2.1 license.
-
+This package is licensed under the [LGPL-2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html) license.
