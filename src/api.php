@@ -46,13 +46,13 @@ function api_cancel_license_ip($sid, $ip, $service_type)
     $return = [];
     $return['status'] = '';
     $return['status_text'] = '';
-    $GLOBALS['tf']->session->sessionid = $sid;
-    if ($GLOBALS['tf']->session->verify()) {
+    \MyAdmin\App::session()->sessionid = $sid;
+    if (\MyAdmin\App::session()->verify()) {
         // Read there account data
-        $custid = get_custid($GLOBALS['tf']->session->account_id, $module);
-        $GLOBALS['tf']->accounts->data = $GLOBALS['tf']->accounts->read($custid);
-        $GLOBALS['tf']->ima = $GLOBALS['tf']->session->appsession('ima');
-        $GLOBALS['tf']->session->update_dla();
+        $custid = get_custid(\MyAdmin\App::session()->account_id, $module);
+        \MyAdmin\App::accounts()->data = \MyAdmin\App::accounts()->read($custid);
+        \MyAdmin\App::tf()->ima = \MyAdmin\App::session()->appsession('ima');
+        \MyAdmin\App::session()->update_dla();
     } else {
         $return['status'] = 'error';
         $return['status_text'] = 'Invalid Session ID';
@@ -114,13 +114,13 @@ function api_cancel_license($sid, $id)
     $return = [];
     $return['status'] = '';
     $return['status_text'] = '';
-    $GLOBALS['tf']->session->sessionid = $sid;
-    if ($GLOBALS['tf']->session->verify()) {
+    \MyAdmin\App::session()->sessionid = $sid;
+    if (\MyAdmin\App::session()->verify()) {
         // Read there account data
-        $custid = get_custid($GLOBALS['tf']->session->account_id, $module);
-        $GLOBALS['tf']->accounts->data = $GLOBALS['tf']->accounts->read($custid);
-        $GLOBALS['tf']->ima = $GLOBALS['tf']->session->appsession('ima');
-        $GLOBALS['tf']->session->update_dla();
+        $custid = get_custid(\MyAdmin\App::session()->account_id, $module);
+        \MyAdmin\App::accounts()->data = \MyAdmin\App::accounts()->read($custid);
+        \MyAdmin\App::tf()->ima = \MyAdmin\App::session()->appsession('ima');
+        \MyAdmin\App::session()->update_dla();
     } else {
         $return['status'] = 'error';
         $return['status_text'] = 'Invalid Session ID';
@@ -202,20 +202,20 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
         5002 => 5009,
         10683 => 10682
     ];
-    $GLOBALS['tf']->session->sessionid = $sid;
-    if ($GLOBALS['tf']->session->verify()) {
+    \MyAdmin\App::session()->sessionid = $sid;
+    if (\MyAdmin\App::session()->verify()) {
         // Read there account data
-        $custid = convert_custid($GLOBALS['tf']->session->account_id, $module);
-        $GLOBALS['tf']->accounts->data = $GLOBALS['tf']->accounts->read($custid);
-        $GLOBALS['tf']->ima = $GLOBALS['tf']->session->appsession('ima');
-        $GLOBALS['tf']->session->update_dla();
+        $custid = convert_custid(\MyAdmin\App::session()->account_id, $module);
+        \MyAdmin\App::accounts()->data = \MyAdmin\App::accounts()->read($custid);
+        \MyAdmin\App::tf()->ima = \MyAdmin\App::session()->appsession('ima');
+        \MyAdmin\App::session()->update_dla();
     } else {
         $return['status'] = 'error';
         $return['status_text'] = 'Invalid Session ID';
         return $return;
     }
     update_session_log(__FUNCTION__);
-    $data = $GLOBALS['tf']->accounts->read($custid);
+    $data = \MyAdmin\App::accounts()->read($custid);
     $continue = true;
     $ip_owner = get_ip_owner($ip);
     if (!validIp($ip, false)) {
@@ -266,7 +266,7 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
                     $service_cost = $coupon_info['amount'];
                     break;
             }
-            $GLOBALS['tf']->history->add('apply_coupon', $ip, $service_cost, $tcost, $custid);
+            \MyAdmin\App::history()->add('apply_coupon', $ip, $service_cost, $tcost, $custid);
         }
     }
     if ($use_prepay == true) {
@@ -405,16 +405,16 @@ function api_buy_license($sid, $ip, $service_type, $coupon = '', $use_prepay = n
  */
 function api_change_license_ip($sid, $oldip, $newip)
 {
-    $GLOBALS['tf']->session->sessionid = $sid;
+    \MyAdmin\App::session()->sessionid = $sid;
     $module = 'licenses';
     $settings = get_module_settings($module);
     $db = get_module_db($module);
     $oldip = $db->real_escape($oldip);
-    if ($GLOBALS['tf']->session->verify()) {
-        $custid = $GLOBALS['tf']->session->account_id;
-        $GLOBALS['tf']->accounts->data = $GLOBALS['tf']->accounts->read($custid);
-        $GLOBALS['tf']->ima = $GLOBALS['tf']->session->appsession('ima');
-        $GLOBALS['tf']->session->update_dla();
+    if (\MyAdmin\App::session()->verify()) {
+        $custid = \MyAdmin\App::session()->account_id;
+        \MyAdmin\App::accounts()->data = \MyAdmin\App::accounts()->read($custid);
+        \MyAdmin\App::tf()->ima = \MyAdmin\App::session()->appsession('ima');
+        \MyAdmin\App::session()->update_dla();
         if (!check_auth_limits(false)) {
             myadmin_log('api', 'info', 'This account is currently locked or does not meet the requirements to login.', __LINE__, __FILE__);
             return false;
@@ -425,7 +425,7 @@ function api_change_license_ip($sid, $oldip, $newip)
         return $return;
     }
     update_session_log(__FUNCTION__);
-    $data = $GLOBALS['tf']->accounts->read($custid);
+    $data = \MyAdmin\App::accounts()->read($custid);
     if ($data['status'] == 'locked') {
         $return['status'] = 'error';
         $return['status_text'] .= "Locked Account.\n";
@@ -463,15 +463,15 @@ function api_change_license_ip($sid, $oldip, $newip)
 function api_change_license_ip_by_id($sid, $id, $newip)
 {
     $id = (int)$id;
-    $GLOBALS['tf']->session->sessionid = $sid;
+    \MyAdmin\App::session()->sessionid = $sid;
     $module = 'licenses';
     $settings = get_module_settings($module);
     $db = get_module_db($module);
-    if ($GLOBALS['tf']->session->verify()) {
-        $custid = $GLOBALS['tf']->session->account_id;
-        $GLOBALS['tf']->accounts->data = $GLOBALS['tf']->accounts->read($custid);
-        $GLOBALS['tf']->ima = $GLOBALS['tf']->session->appsession('ima');
-        $GLOBALS['tf']->session->update_dla();
+    if (\MyAdmin\App::session()->verify()) {
+        $custid = \MyAdmin\App::session()->account_id;
+        \MyAdmin\App::accounts()->data = \MyAdmin\App::accounts()->read($custid);
+        \MyAdmin\App::tf()->ima = \MyAdmin\App::session()->appsession('ima');
+        \MyAdmin\App::session()->update_dla();
         if (!check_auth_limits(false)) {
             myadmin_log('api', 'info', 'This account is currently locked or does not meet the requirements to login.', __LINE__, __FILE__, $module);
             return false;
@@ -482,7 +482,7 @@ function api_change_license_ip_by_id($sid, $id, $newip)
         return $return;
     }
     update_session_log(__FUNCTION__);
-    $data = $GLOBALS['tf']->accounts->read($custid);
+    $data = \MyAdmin\App::accounts()->read($custid);
     if ($data['status'] == 'locked') {
         $return['status'] = 'error';
         $return['status_text'] .= "Locked Account.\n";
