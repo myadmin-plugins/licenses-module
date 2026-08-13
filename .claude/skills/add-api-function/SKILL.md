@@ -1,6 +1,6 @@
 ---
 name: add-api-function
-description: Adds a new global-namespace API function to `src/api.php` following the existing pattern. Registers it in `Plugin::getRequirements()` and `Plugin::apiRegister()`. Use when user says 'add API function', 'new license operation', 'add endpoint to api.php', or adds a new license action. Do NOT use for modifying `src/Plugin.php` hooks unrelated to API registration. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Adds a new global-namespace API function to `src/api.php` following the existing pattern. Registers it in `Plugin::getRequirements()` and `Plugin::apiRegister()`. Use when user says 'add API function', 'new license operation', 'add endpoint to api.php', or adds a new license action. Do NOT use for modifying `src/Plugin.php` hooks unrelated to API registration. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file

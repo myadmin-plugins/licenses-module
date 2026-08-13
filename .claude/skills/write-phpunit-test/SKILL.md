@@ -1,6 +1,6 @@
 ---
 name: write-phpunit-test
-description: Creates PHPUnit 9 tests in `tests/` using the ReflectionFunction/ReflectionClass pattern from `tests/ApiTest.php` and `tests/PluginTest.php`. Covers function existence, parameter names, parameter counts, optionality, and default values. Use when user says 'write test', 'add test for', 'test the API function', or adds a new function to src/api.php. Do NOT use for integration tests that require a live database, real MyAdmin global functions, or HTTP calls. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Creates PHPUnit 9 tests in `tests/` using the ReflectionFunction/ReflectionClass pattern from `tests/ApiTest.php` and `tests/PluginTest.php`. Covers function existence, parameter names, parameter counts, optionality, and default values. Use when user says 'write test', 'add test for', 'test the API function', or adds a new function to src/api.php. Do NOT use for integration tests that require a live database, real MyAdmin global functions, or HTTP calls. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file
