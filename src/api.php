@@ -64,7 +64,7 @@ function api_cancel_license_ip($sid, $ip, $service_type)
         $return['status_text'] .= "Invalid IP Address\n";
         return $return;
     }
-    $query = "select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_custid='{$custid}'";
+    $query = licenses_cancel_ip_query($settings, $ip, $custid);
     $db->query($query, __LINE__, __FILE__);
     if ($db->num_rows() == 0) {
         $return['status'] = 'error';
@@ -78,10 +78,7 @@ function api_cancel_license_ip($sid, $ip, $service_type)
                 // reused code block from below start
                 $id = $db->Record[$settings['PREFIX'] . '_id'];
                 function_requirements('cancel_service');
-                cancel_service($id, $module);
-                $return['status'] = 'ok';
-                $return['status_text'] = "License Canceled.\n";
-                return $return;
+                return licenses_cancel_api_result(cancel_service($id, $module));
                 // reused code block from below end
             }
         }
@@ -90,9 +87,7 @@ function api_cancel_license_ip($sid, $ip, $service_type)
         // this code reused above
         $id = $db->Record[$settings['PREFIX'] . '_id'];
         function_requirements('cancel_service');
-        cancel_service($id, $module);
-        $return['status'] = 'ok';
-        $return['status_text'] = "License Canceled.\n";
+        return licenses_cancel_api_result(cancel_service($id, $module));
     }
     return $return;
 }
@@ -136,10 +131,43 @@ function api_cancel_license($sid, $id)
     }
     $db->next_record(MYSQL_ASSOC);
     function_requirements('cancel_service');
-    cancel_service($id, $module);
-    $return['status'] = 'ok';
-    $return['status_text'] .= "License Canceled.\n";
-    return $return;
+    return licenses_cancel_api_result(cancel_service($id, $module));
+}
+
+/**
+ * The lookup api_cancel_license_ip() cancels from: the customer's licenses on
+ * the ip that are not canceled/expired. Without the status filter a canceled
+ * license and a new active one on the same ip both matched and the first row
+ * (often the canceled one) was picked.
+ *
+ * @param array      $settings the licenses module settings (TABLE, PREFIX)
+ * @param string     $ip       the ip, already real_escape()d by the caller
+ * @param int|string $custid   the session's customer id
+ * @return string
+ */
+function licenses_cancel_ip_query($settings, $ip, $custid)
+{
+    return "select * from {$settings['TABLE']} where {$settings['PREFIX']}_ip='{$ip}' and {$settings['PREFIX']}_custid='".(int) $custid."' and {$settings['PREFIX']}_status not in ('canceled','expired')";
+}
+
+/**
+ * The api answer for a cancel_service() result. A refused or failed cancel is an
+ * error (it used to answer "ok / License Canceled" whatever cancel_service()
+ * did), with core's CancelPolicy reason when there is one.
+ *
+ * @param bool $canceled what cancel_service() returned
+ * @return array{status: string, status_text: string}
+ */
+function licenses_cancel_api_result($canceled)
+{
+    if ($canceled) {
+        return ['status' => 'ok', 'status_text' => "License Canceled.\n"];
+    }
+    $refusal = class_exists(\MyAdmin\Services\CancelPolicy::class) ? \MyAdmin\Services\CancelPolicy::lastRefusal() : null;
+    return [
+        'status' => 'error',
+        'status_text' => $refusal !== null ? $refusal : _('Unable to cancel the license. Contact our support team for help!'),
+    ];
 }
 
 /**
